@@ -1,11 +1,11 @@
 import ItemList from "./ItemList.js";
 import {useState} from "react";
 
-const RestaurantCategory = ({data}) => {
-    const [showItems, setShowItems] = useState(false);
-    console.log(data);
+const RestaurantCategory = ({data, showItems, setShowIndex}) => {
+    const [flag, setFlag] = useState(true);
     const handleClick = () => {
-        setShowItems(!showItems);
+        setFlag(!flag);
+        setShowIndex(flag);
     }
     return <div>
         <div className="w-6/12 mx-auto my-4 bg-gray-50 shadow-lg p-4">
