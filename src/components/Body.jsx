@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useContext} from "react";
 import RestaurantCard, {withPromotedLabel} from "./RestaurantCard.jsx";
 import {resList} from '../utils/mockData.js';
 import Shimmer from "./Shimmer.jsx";
 import {Link} from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus.js";
+import UserContext from "../utils/UserContext.js";
 
 const Body = () => {
     // Local State Variable - Super Powerful Variable
@@ -13,6 +14,9 @@ const Body = () => {
 
     // Calling Higher Order Component
     const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
+
+    const { setUserName, loggedInUser } = useContext(UserContext);
+    console.log('set userName', setUserName);
 
     const fetchData = async () => {
         const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.9380137&lng=75.78877&collection=80475&tags=&sortBy=&filters=&type=rcv2&offset=0&page_type=null");
@@ -46,6 +50,14 @@ const Body = () => {
                 <button className="filter-btn px-4 py-2 bg-gray-100 m-4 rounded-lg" onClick={() => {
                     setFilteredRestaurants(listOfRestaurants.filter((restaurant) => restaurant.card.card.info.avgRating >= 4.0));
                 }}>Top Rated Restaurant</button>
+                <div className="uname px-4 py-2 m-4">
+                    <label>User Name: </label>
+                    <input
+                        className="border border-solid border-black"
+                        value={loggedInUser}
+                        onChange={(e) => setUserName(e.target.value)}
+                    />
+                </div>
             </div>
             <div className="search">
                 <div className="res-container flex wrap">
